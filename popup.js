@@ -13,8 +13,10 @@ document.getElementById('overlay-btn').addEventListener('click', () => {
     });
 });
 
+
 function createOverlay() {
     if (document.getElementById('overlay-panel')) return;
+
 
     const panel = document.createElement('div');
     panel.id = 'overlay-panel';
@@ -73,91 +75,22 @@ function createOverlay() {
         panel.remove(); // Remove the panel from the current tab
         chrome.storage.local.set({ overlayActive: false });
     });
-    function createDrawingCanvas(screenshotUrl) {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-
-        const image = new Image();
-        image.src = screenshotUrl;
-
-        image.onload = () => {
-            canvas.width = image.width;
-            canvas.height = image.height;
-            context.drawImage(image, 0, 0);
-
-            // Append the drawing canvas to the body
-            document.body.appendChild(canvas);
-
-            // Drawing functionality
-            let isDrawing = false;
-            let size = 10; // Default brush size
-            let color = 'black'; // Default color
-
-            const sizeElement = document.createElement('input');
-            sizeElement.type = 'range';
-            sizeElement.min = 1;
-            sizeElement.max = 50;
-            sizeElement.value = size;
-            document.body.appendChild(sizeElement);
-
-            sizeElement.oninput = (e) => {
-                size = e.target.value;
-            };
-
-            const colorElement = document.createElement('input');
-            colorElement.type = 'color';
-            colorElement.value = color;
-            document.body.appendChild(colorElement);
-
-            colorElement.oninput = (e) => {
-                color = e.target.value;
-            };
-
-            canvas.onmousedown = (e) => {
-                isDrawing = true;
-                context.beginPath();
-                context.lineWidth = size;
-                context.strokeStyle = color;
-                context.lineJoin = 'round';
-                context.lineCap = 'round';
-                context.moveTo(e.offsetX, e.offsetY);
-            };
-
-            canvas.onmousemove = (e) => {
-                if (isDrawing) {
-                    context.lineTo(e.offsetX, e.offsetY);
-                    context.stroke();
-                }
-            };
-
-            canvas.onmouseup = () => {
-                isDrawing = false;
-                context.closePath();
-            };
-
-            // Clear function
-            const clearButton = document.createElement('button');
-            clearButton.innerText = 'Clear Drawing';
-            document.body.appendChild(clearButton);
-            clearButton.onclick = () => {
-                context.clearRect(0, 0, canvas.width, canvas.height);
-                context.drawImage(image, 0, 0); // Redraw the screenshot
-            };
-        };
-    }
-
 
 
     document.getElementById('screenshot-btn').addEventListener('click', () => {
         chrome.runtime.sendMessage({ action: 'captureScreenshot' }, (response) => {
             if (response.success) {
-                createDrawingCanvas(response.screenshotUrl); // Pass the screenshot URL to the drawing function
+                // createDrawingCanvas(response.screenshotUrl);
+
+
             } else {
                 console.error('Screenshot capture failed:', response.error);
             }
         });
     });
 }
+
+
 
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

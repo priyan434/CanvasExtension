@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div>
+    <canvas
+            id="canvas"
+            width="100vw"
+            height="100vh"
+            style="border: 1px solid black;"
+    ></canvas>
+</div>
+<div style="margin-top:5px">
+    <span>Size: </span>
+    <input
+            type="range"
+            min="1"
+            max="50"
+            value="10"
+            class="size"
+            id="sizeRange"
+    />
+</div>
+<div style="margin-top:5px">
+    <span>Color: </span>
+    <input type="radio" name="colorRadio" value="black" checked />
+    <label for="black">Black</label>
+    <input type="radio" name="colorRadio" value="white" />
+    <label for="black">White</label>
+    <input type="radio" name="colorRadio" value="red" />
+    <label for="black">Red</label>
+    <input type="radio" name="colorRadio" value="green" />
+    <label for="black">Green</label>
+    <input type="radio" name="colorRadio" value="blue" />
+    <label for="black">Blue</label>
+</div>
+<div style="margin-top:5px">
+    <button id="clear" >Clear</button>
+</div>
+<br />
+<input id="upload" type="file" accept="image/*" />
+
+<script src="draw.js"></script>
+<script src="src/index.js"></script>
+</body>
+</html>
