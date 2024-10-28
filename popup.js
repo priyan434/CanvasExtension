@@ -72,7 +72,7 @@ function createOverlay() {
                 console.error('Failed to send overlay close message.');
             }
         });
-        panel.remove(); // Remove the panel from the current tab
+        panel.remove();
         chrome.storage.local.set({ overlayActive: false });
     });
 
@@ -92,12 +92,12 @@ function createOverlay() {
 
 
 
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'closeOverlay') {
         const panel = document.getElementById('overlay-panel');
         if (panel) {
             panel.remove();
+            chrome.storage.local.set({ overlayActive: false });
         }
     }
 });

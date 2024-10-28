@@ -5,12 +5,9 @@
   "description": "An extension that overlays the window.",
   "action": {
     "default_popup": "popup.html"
-   
+
   },
-    "side_panel": {
-      "default_path": "sidepanel.html"
-    },
-  "permissions": ["scripting", "activeTab","storage","tabs","downloads","sidePanel"],
+  "permissions": ["scripting", "activeTab","storage","tabs","downloads","sidePanel","webNavigation"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "background.js"
