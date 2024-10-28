@@ -1,6 +1,11 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === 'closeOverlay') {
-        console.log('Overlay closed');
+        console.log('Close overlay request received');
+        chrome.tabs.query({}, (tabs) => {
+            tabs.forEach(tab => {
+                chrome.tabs.sendMessage(tab.id, { action: 'closeOverlay' });
+            });
+        });
         sendResponse({ success: true });
     } else if (request.action === 'captureScreenshot') {
         chrome.tabs.captureVisibleTab(null, {}, (screenshotUrl) => {
@@ -11,11 +16,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 sendResponse({ success: true, screenshotUrl });
             }
         });
-
-        return true; 
-    } else if (request.action === 'test') {
-        console.log('Test message received in background');
-        sendResponse({ success: true });
+        return true;
     }
 });
 

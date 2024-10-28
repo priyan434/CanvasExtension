@@ -9,6 +9,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             chrome.tabs.sendMessage(sender.tab.id, { action: 'downloadScreenshot', image });
             sendResponse({ success: true });
         });
-        return true; // Indicates an asynchronous response
+        return true;
     }
+    if (request.action === 'closeOverlay') {
+        const panel = document.getElementById('overlay-panel');
+        if (panel) {
+            panel.remove();
+            console.log('Overlay closed');
+        }
+        sendResponse({ success: true });
+    }
+
 });

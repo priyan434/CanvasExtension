@@ -17,5 +17,11 @@
       "matches": ["<all_urls>"], 
       "js": ["content.js"]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/index.js"],
+      "matches": ["<all_urls>"]
+    }
   ]
 }
